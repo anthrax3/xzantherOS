@@ -1,0 +1,12 @@
+Django==1.10.3
+Markdown==2.6.7
+boto3==1.4.1
+botocore==1.4.70
+django-filter==0.15.3
+django-stronghold==0.2.8
+djangorestframework==3.5.2
+docutils==0.12
+futures==3.0.5
+jmespath==0.9.0
+python-keyczar==0.716
+s3transfer==0.1.9

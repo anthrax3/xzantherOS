@@ -10,3 +10,7 @@ class NoProfileFoundException(InstanceEngineException):
 
 class SettingLoadException(InstanceEngineException):
     message = 'There was an error loading instance settings'
+
+
+class MissingSettingException(InstanceEngineException):
+    message = 'A setting is missing. Cannot continue.'

@@ -1,7 +1,11 @@
 
-from instance_manager.instance_engine import instance_config
-from instance_manager.instance_engine.instance_exceptions import NoProfileFoundException, SettingLoadException
+import boto3
 
+from django.conf import settings
+
+from instance_manager.instance_engine import instance_config
+from instance_manager.instance_engine.instance_exceptions import NoProfileFoundException, SettingLoadException, \
+    MissingSettingException
 from base.models import Profile, ProfileSetting, Setting
 
 
@@ -54,9 +58,10 @@ class GenericInstanceManager(object):
     This is the general instance manager class -- it is meant to be overwritten
     """
 
-    def set_settings(self, settings, *args, **kwargs):
+    def set_settings(self, *args, **kwargs):
         """
         Used to set any permissions or other settings required to connect to the instance.
+        MUST include profile id
         This includes the address of the instance, etc.
         NOTE: TO BE OVERWRITTEN!
         NOTE: Can also use __init__()
@@ -102,6 +107,28 @@ class AWSInstanceManager(GenericInstanceManager):
     Check to see if the ping server is running - if not, start it
     """
 
+    profile_id = None
+
+    def set_settings(self, *args, **kwargs):
+        self.profile_id = kwargs.get('profile_id', None)
+
+        if self.profile_id is None:
+            raise MissingSettingException()
+
+    def connect(self, *args, **kwargs):
+
+        try:
+            key_id = ProfileSetting.objects.get(profile_id=self.profile_id, setting=instance_config.AWS_KEY_ID)
+            key = ProfileSetting.objects.get(profile_id=self.profile_id, setting=instance_config.AWS_KEY)
+        except:
+            raise MissingSettingException()
+
+        region_name = kwargs.get('region_name', 'us-west-2')
+
+        ec2 = boto3.resource('ec2', region_name=region_name, aws_access_key_id=key_id.value,
+                             aws_secret_access_key=key.value)
+
+        test = 'test'
 
 
 
