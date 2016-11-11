@@ -1,0 +1,51 @@
+#skin-rugged-yellow {
+    background-image: url("../../img/body/cloth.png");
+    background-repeat: repeat;
+}
+
+.centered {
+    display: table;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.text_total_centered {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    float: none;
+}
+
+.big-text {
+    font-size: 180%;
+}
+
+.footer {
+    display: block;
+    font-size: 80%;
+}
+
+.padded10 {
+    padding: 10px;
+}
+
+.padded5 {
+    padding: 5px;
+}
+
+.min_height {
+    min-height: 200px;
+}
+
+.small_text {
+    font-size: 10pt;
+}
+
+textarea {
+    height: 150px;
+    font-size: 10pt;
+}
+
+text {
+    font-size: 10pt;
+}
